@@ -14,9 +14,9 @@ cie_X = df['X(λ)'].values  # CIE color matching function X
 cie_Y = df['Y(λ)'].values  # CIE color matching function Y
 cie_Z = df['Z(λ)'].values  # CIE color matching function Z
 
-X = integrate.simps(spd * cie_X, wavelengths)
-Y = integrate.simps(spd * cie_Y, wavelengths)
-Z = integrate.simps(spd * cie_Z, wavelengths)
+X = integrate.simpson(spd * cie_X, wavelengths)
+Y = integrate.simpson(spd * cie_Y, wavelengths)
+Z = integrate.simpson(spd * cie_Z, wavelengths)
 
 
 total = X + Y + Z

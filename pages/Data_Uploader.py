@@ -29,6 +29,12 @@ if uploaded_files:
             data = pd.read_csv(uploaded_file, header=None)
             wavelength_column = data[0]
             value_column = data[1]
+            print(wavelength_column)
+            print(wavelengths)
+
+            # Convert columns to numeric, coercing errors to NaN
+            wavelength_column = pd.to_numeric(data[0], errors='coerce')
+            value_column = pd.to_numeric(data[1], errors='coerce')
 
             interpolated_values = np.interp(wavelengths, wavelength_column, value_column)
             spds.append(interpolated_values)

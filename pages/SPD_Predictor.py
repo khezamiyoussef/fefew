@@ -29,7 +29,8 @@ if user_file is not None:
     try:
         combined_df = pd.concat([reference_data, user_data], axis=1, ignore_index=True)
         combined_df = combined_df.drop(columns=combined_df.columns[2])
-
+        print(combined_df[combined_df.columns[1]])
+        print(combined_df[combined_df.columns[2]])
         combined_df['sum_col_1_2'] = combined_df[combined_df.columns[1]] + combined_df[combined_df.columns[2]]
 
         combined_df.columns = ['wavelength (nm)', 'Reference SPD', 'Input SPD', 'Predicted SPD']
@@ -45,6 +46,7 @@ if user_file is not None:
 
     except Exception as e:
         st.error(f"Error processing the data: {e}")
+        raise e
 
     with col1:
 
