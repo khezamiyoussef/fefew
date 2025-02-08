@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 st.image("richter logo_schwarz.png", width=250)
 
 uploaded_files = st.file_uploader(
-    "Choose CSV files to compare", accept_multiple_files=True, type='csv'
+    "Choose CSV files to compare", accept_multiple_files=True, type='xlsx'
 )
 
 if uploaded_files:
@@ -26,7 +26,7 @@ if uploaded_files:
             if uploaded_file.name not in options:
                 continue
 
-            data = pd.read_csv(uploaded_file, header=None)
+            data = pd.read_excel(uploaded_file, header=None)
             wavelength_column = data[0]
             value_column = data[1]
             print(wavelength_column)

@@ -1,16 +1,14 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from pages import spd_calculate
 st.set_page_config(layout="wide")
 
 st.title("SPD Predictor Based on a reference SPD and User Input")
 
-user_file = st.file_uploader("Upload your CSV file", type=["csv"])
+user_file = st.file_uploader("Upload your CSV file", type=["xlsx"])
 
 
-def read_csv(file):
-    return pd.read_csv(file, header=None)
 
 
 def read_reference_data():
@@ -24,7 +22,7 @@ reference_data = read_reference_data()
 col1, col2 = st.columns([1, 2])
 
 if user_file is not None:
-    user_data = read_csv(user_file)
+    user_data =  pd.read_excel(user_file, header=None)
 
     try:
         combined_df = pd.concat([reference_data, user_data], axis=1, ignore_index=True)
@@ -38,6 +36,10 @@ if user_file is not None:
         fig, ax = plt.subplots(figsize=(8, 4))
         ax.plot(combined_df['wavelength (nm)'], combined_df['Input SPD'], label='Input SPD', color='red')
         ax.plot(combined_df['wavelength (nm)'], combined_df['Predicted SPD'], label='Predicted SPD', color='blue')
+        x11, x12 = spd_calculate.calculate(combined_df['Input SPD'], combined_df['wavelength (nm)'])
+        x21, x22 = spd_calculate.calculate(combined_df['Predicted SPD'], combined_df['wavelength (nm)'])
+        st.write(f"x: {x11}, y: {x12}")
+        st.write(f"x: {x21}, y: {x22}")
         ax.set_xlabel("Wavelength (nm)")
         ax.set_ylabel("SPD")
         ax.set_title("Input SPD vs Predicted SPD")
